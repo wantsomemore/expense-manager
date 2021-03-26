@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Header from "../src/components/Header";
+import Form from "../src/components/Form";
+import Total from "../src/components/Total";
+import "./global.scss";
+import ExpensesList from "./components/ExpensesList.js";
+const App = () => {
 
-function App() {
+  const [totalExpense, setTotalExpense] = useState([]);
+  const [expenseList, setExpenseList] = useState([]);
+  
+  let amount = totalExpense.map(item => item.price);
+  let total = amount.reduce((acc,item) => acc += item ,0).toFixed(2);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Total total={total} />
+      <Form
+        expenseList={expenseList}
+        setExpenseList={setExpenseList}
+        totalExpense={totalExpense}
+        setTotalExpense={setTotalExpense}
+      />
+      <ExpensesList expenseList={expenseList} setExpenseList={setExpenseList} />
+    </>
   );
-}
+};
 
 export default App;
