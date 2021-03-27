@@ -9,13 +9,12 @@ const App = () => {
   const [totalExpense, setTotalExpense] = useState([]);
   const [expenseList, setExpenseList] = useState([]);
   
-  let amount = totalExpense.map(item => item.price);
-  let total = amount.reduce((acc,item) => acc += item ,0).toFixed(2);
+  
 
   return (
     <>
       <Header />
-      <Total total={total} />
+      <Total totalExpense={totalExpense} />
       <Form
         expenseList={expenseList}
         setExpenseList={setExpenseList}

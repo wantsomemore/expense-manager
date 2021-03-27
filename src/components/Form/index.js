@@ -15,8 +15,8 @@ const useStyles = makeStyles({
   title: {
     textAlign: "center",
     color: "#323232",
-    fontSize: "24px",
-    lineHeight: "30px",
+    fontSize: "28px",
+    lineHeight: "32px",
     fontFamily: "Robotto",
   },
   label: {
