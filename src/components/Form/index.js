@@ -64,37 +64,28 @@ const Form = ({
 
   const [currency, setCurrency] = useState("");
   const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [fromCurrency, setFromCurrency] = useState('')
-  const [toCurrency, setToCurrency] = useState('')
-  const [exchangeRates, setExchangeRates] = useState([])
+  const [currencyRate, setCurrencyRate] = useState(null)
   const product = useRef('');
   const price = useRef(null);
   const date = useRef('');
-
- 
- 
- 
 
   useEffect(() => {
     fetch(CURRENCY_API)
       .then(res => res.json())
       .then(data =>  {
         setCurrencyOptions([data.base, ...Object.keys(data.rates)])
-        setFromCurrency(currency)
-        setToCurrency('PLN')
       });
   }, []);
-
+    
   useEffect(() => {
-      if (fromCurrency != null && toCurrency != null) {
-      fetch(`${CURRENCY_API}?base=${fromCurrency}&symbols=${toCurrency}`)
+      if (currency !== null) {
+     fetch(`https://api.exchangerate.host/convert?from=${currency}&to=PLN`)
         .then(res => res.json())
         .then(data => {
-          setExchangeRates(data.rates[toCurrency])
+         setCurrencyRate(data.info.rate)
         })
-  }}, [fromCurrency, toCurrency])
- 
- 
+  }}, [currency, setCurrencyRate])
+
   const handleCurrency = (e) => {
     setCurrency(e.target.value);
   };
@@ -108,8 +99,8 @@ const Form = ({
     setTotalExpense([
       ...totalExpense,
       {
-        price: price.current.value * exchangeRates,
-        currency: toCurrency
+        price: price.current.value * currencyRate,
+        currency: currency
       }
     ])
    
